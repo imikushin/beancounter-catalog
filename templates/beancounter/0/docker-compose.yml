@@ -1,0 +1,39 @@
+version: '2'
+
+services:
+  server:
+    image: imikushin/beancounter:dev
+    command: [beancounter, server]
+#    command: [sh]
+    tty: true
+    depends_on: [postgres, influxdb]
+    labels:
+      io.rancher.container.create_agent: 'true'
+      io.rancher.container.agent.role: 'environmentAdmin'
+    environment:
+      CATTLE_ACCESS_KEY: ${service_account}
+      CATTLE_SECRET_KEY: ${service_pass}
+
+  postgres:
+    image: postgres:9.6
+    environment:
+      POSTGRES_DB: beancounter
+      POSTGRES_USER: beancounter
+      POSTGRES_PASSWORD: beancounter
+
+  influxdb:
+    image: influxdb:1.1
+
+  agent:
+    image: imikushin/beancounter:dev
+    command: [beancounter, agent]
+#    command: [sh]
+    tty: true
+    depends_on: [server, influxdb]
+    volumes:
+    - /var/run/docker.sock:/var/run/docker.sock
+    privileged: true
+    network_mode: host
+    labels:
+      io.rancher.scheduler.global: 'true'
+      io.rancher.container.dns: 'true'

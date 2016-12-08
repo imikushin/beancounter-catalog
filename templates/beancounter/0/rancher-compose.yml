@@ -1,0 +1,16 @@
+.catalog:
+  name: "Beancounter"
+  version: "v0.1.0"
+  description: "Rancher Resource Usage Accounting"
+  minimum_rancher_version: v1.2.0
+  questions:
+  - variable: "service_account"
+    label: "Service account"
+    description: "Service account with privileges to listen to events on the top level (across environments)"
+    type: "string"
+    required: true
+    default: "service"
+  - variable: "service_pass"
+    label: "Service account password"
+    type: "string"
+    required: true
