@@ -2,7 +2,7 @@ version: '2'
 
 services:
   server:
-    image: imikushin/beancounter:dev
+    image: imikushin/beancounter:v0.3.1
     command: [beancounter, server]
 #    command: [sh]
     tty: true
@@ -23,7 +23,7 @@ services:
     image: influxdb:1.1
 
   agent:
-    image: imikushin/beancounter:dev
+    image: imikushin/beancounter:v0.3.1
     command: [beancounter, agent]
 #    command: [sh]
     tty: true
