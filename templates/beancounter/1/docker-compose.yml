@@ -21,3 +21,12 @@ services:
 
   influxdb:
     image: influxdb:1.1
+
+  lb:
+    image: rancher/lb-service-haproxy:v0.4.2
+    ports:
+    - 8086:8086/tcp
+    - 3000:3000/tcp
+    labels:
+      io.rancher.container.agent.role: environmentAdmin
+      io.rancher.container.create_agent: 'true'
