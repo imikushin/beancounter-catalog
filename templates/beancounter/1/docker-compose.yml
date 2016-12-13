@@ -1,0 +1,23 @@
+version: '2'
+
+services:
+  server:
+    image: imikushin/beancounter:v0.3.2
+    command: [beancounter, server]
+#    command: [sh]
+    tty: true
+    depends_on: [postgres, influxdb]
+    environment:
+      CATTLE_URL: ${cattle_url}
+      CATTLE_ACCESS_KEY: ${service_account}
+      CATTLE_SECRET_KEY: ${service_pass}
+
+  postgres:
+    image: postgres:9.6
+    environment:
+      POSTGRES_DB: beancounter
+      POSTGRES_USER: beancounter
+      POSTGRES_PASSWORD: beancounter
+
+  influxdb:
+    image: influxdb:1.1
