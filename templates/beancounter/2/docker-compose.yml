@@ -2,7 +2,7 @@ version: '2'
 
 services:
   server:
-    image: imikushin/beancounter:v0.3.3
+    image: imikushin/beancounter:v0.3.4
     command: [beancounter, server]
 #    command: [sh]
     tty: true
