@@ -1,0 +1,42 @@
+.catalog:
+  name: Beancounter
+  version: v0.3.10
+  description: "Rancher Resource Usage Accounting"
+  minimum_rancher_version: v1.2.0
+  questions:
+  - variable: "cattle_url"
+    label: "Rancher Server URL"
+    description: "Rancher Server URL in the form of `http://hostname-or-ip:8080`"
+    type: "string"
+    required: true
+    default: "http://example.com:8080"
+  - variable: "service_account"
+    label: "Service account"
+    description: "Service account with privileges to listen to events on the top level (across environments)"
+    type: "string"
+    required: true
+    default: "service"
+  - variable: "service_pass"
+    label: "Service account password"
+    type: "string"
+    required: true
+    default: "servicepass"
+lb:
+  lb_config:
+    port_rules:
+    - priority: 1
+      protocol: http
+      service: influxdb
+      source_port: 8086
+      target_port: 8086
+    - priority: 2
+      protocol: http
+      service: server
+      source_port: 3000
+      target_port: 3000
+  health_check:
+    response_timeout: 2000
+    healthy_threshold: 2
+    port: 42
+    unhealthy_threshold: 3
+    interval: 2000
