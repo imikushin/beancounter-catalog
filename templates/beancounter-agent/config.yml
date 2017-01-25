@@ -1,5 +1,5 @@
 name: Beancounter Agent
 description: |
   Rancher Resource Usage Tracking Agent
-version: v0.3.10
+version: v0.3.13
 category: Usage accounting

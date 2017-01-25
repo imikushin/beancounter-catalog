@@ -1,0 +1,30 @@
+version: '2'
+
+services:
+  server:
+    image: imikushin/beancounter:v0.3.13
+    command: [beancounter, server]
+    links: [postgres, influxdb]
+    environment:
+      CATTLE_URL: ${cattle_url}
+      CATTLE_ACCESS_KEY: ${service_account}
+      CATTLE_SECRET_KEY: ${service_pass}
+
+  postgres:
+    image: postgres:9.6
+    environment:
+      POSTGRES_DB: beancounter
+      POSTGRES_USER: beancounter
+      POSTGRES_PASSWORD: beancounter
+
+  influxdb:
+    image: influxdb:1.2
+
+  lb:
+    image: rancher/lb-service-haproxy:v0.4.6
+    ports:
+    - 8086:8086/tcp
+    - 3000:3000/tcp
+    labels:
+      io.rancher.container.agent.role: environmentAdmin
+      io.rancher.container.create_agent: 'true'
